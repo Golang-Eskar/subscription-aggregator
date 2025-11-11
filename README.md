@@ -34,27 +34,3 @@ Subscription Aggregator — REST-сервис, позволяющий храни
 
 ---
 
-## 📂 Структура проекта
-
-subscription-aggregator/
-├── cmd/
-│ └── app/
-│ └── main.go
-├── internal/
-│ ├── config/ # конфигурация приложения
-│ ├── controller/ # HTTP-контроллеры
-│ ├── service/ # бизнес-логика
-│ ├── repository/ # доступ к БД
-│ ├── model/ # модели данных
-│ └── logger/ # логирование
-├── migrations/ # SQL-миграции
-├── pkg/ # вспомогательные пакеты
-├── tests/ # юнит- и интеграционные тесты
-├── .env # переменные окружения
-├── Dockerfile
-├── docker-compose.yml
-├── Makefile
-└── README.md
-
-
-
