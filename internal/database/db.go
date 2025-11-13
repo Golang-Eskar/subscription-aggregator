@@ -4,7 +4,9 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/lib/pq"
+	"log"
 	"os"
+	"time"
 )
 
 const creatdb = `CREATE TABLE subscriptions (
@@ -20,6 +22,9 @@ const creatdb = `CREATE TABLE subscriptions (
 var db *sql.DB
 
 func Init() error {
+	log.Println("⏳ Ждем запуска PostgreSQL...")
+	time.Sleep(5 * time.Second)
+
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
 	user := os.Getenv("DB_USER")
