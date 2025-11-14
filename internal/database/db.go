@@ -10,7 +10,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-const creatdb = `CREATE TABLE subscriptions (
+const creatdb = `CREATE TABLE IF NOT EXISTS subscriptions (
     id SERIAL PRIMARY KEY,
     user_id UUID NOT NULL,
     service_name VARCHAR(100) NOT NULL,
@@ -31,19 +31,6 @@ func Init() error {
 	user := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASSWORD")
 	dbname := os.Getenv("DB_NAME")
-
-	if host == "" {
-		host = "localhost"
-	}
-	if port == "" {
-		port = "5432"
-	}
-	if user == "" {
-		user = "postgres"
-	}
-	if dbname == "" {
-		dbname = "subscriptions_db"
-	}
 
 	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
