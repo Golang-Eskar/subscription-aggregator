@@ -11,7 +11,7 @@ import (
 func main() {
 	fmt.Println("Запуск")
 
-	err1 := godotenv.Load()
+	err1 := godotenv.Load(".env")
 	if err1 != nil {
 		return
 	}
