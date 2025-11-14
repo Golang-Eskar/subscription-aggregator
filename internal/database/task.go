@@ -1,15 +1,10 @@
 package database
 
-type Task struct {
-	service_name  string
-	monthly_price int
-	user_id       string
-	start_date    string
-}
+import "github.com/Golang-Eskar/subscription-aggregator/internal/models"
 
-func Baysub(w Task) (int, error) {
+func Baysub(w models.Task) (int, error) {
 	result, err := db.Exec("INSERT INTO subscriptions (service_name, monthly_price, user_id, start_date) VALUES ($1, $2, $3, $4)",
-		w.service_name, w.monthly_price, w.user_id, w.start_date)
+		w.Service_name, w.Monthly_price, w.User_id, w.Start_date)
 	if err != nil {
 		return 0, err
 	}
@@ -21,11 +16,11 @@ func Baysub(w Task) (int, error) {
 	return int(id), nil
 }
 
-func NewTask(service_name string, price int, user_id string, start_date string) *Task {
-	return &Task{
-		service_name:  service_name,
-		monthly_price: price,
-		user_id:       user_id,
-		start_date:    start_date,
+func NewTask(service_name string, price int, user_id string, start_date string) *models.Task {
+	return &models.Task{
+		Service_name:  service_name,
+		Monthly_price: price,
+		User_id:       user_id,
+		Start_date:    start_date,
 	}
 }

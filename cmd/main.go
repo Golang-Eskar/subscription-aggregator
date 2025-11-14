@@ -19,4 +19,5 @@ func main() {
 	if err != nil {
 		log.Fatal("Ошибка базы данных:", err)
 	}
+
 }

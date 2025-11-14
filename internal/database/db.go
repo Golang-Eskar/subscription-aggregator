@@ -23,7 +23,7 @@ const creatdb = `CREATE TABLE IF NOT EXISTS subscriptions (
 var db *sql.DB
 
 func Init() error {
-	log.Println("⏳ Ждем запуска PostgreSQL...")
+	log.Println("Ждем запуска PostgreSQL...")
 	time.Sleep(5 * time.Second)
 
 	host := os.Getenv("DB_HOST")
