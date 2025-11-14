@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/Golang-Eskar/subscription-aggregator/internal/database"
 	"log"
+
+	"github.com/Golang-Eskar/subscription-aggregator/internal/database"
 )
 
 func main() {
@@ -13,4 +14,5 @@ func main() {
 	if err != nil {
 		log.Fatal("Ошибка базы данных:", err)
 	}
+
 }
