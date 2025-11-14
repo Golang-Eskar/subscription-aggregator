@@ -20,7 +20,7 @@ const creatdb = `CREATE TABLE IF NOT EXISTS subscriptions (
     created_at TIMESTAMP DEFAULT NOW()
 );`
 
-var db *sql.DB
+var DB *sql.DB
 
 func Init() error {
 	log.Println("Ждем запуска PostgreSQL...")
@@ -49,7 +49,7 @@ func Init() error {
 		return fmt.Errorf("ошибка создания таблицы: %w", err)
 	}
 
-	db = dbConn
+	DB = dbConn
 	return nil
 }
 

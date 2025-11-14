@@ -1,8 +1,12 @@
 package models
 
-type Task struct {
-	Service_name  string
-	Monthly_price int
-	User_id       string
-	Start_date    string
+import "time"
+
+type Subscription struct {
+	ID           int        `json:"id"`
+	UserID       string     `json:"user_id"`
+	ServiceName  string     `json:"service_name"`
+	MonthlyPrice int        `json:"monthly_price"`
+	StartDate    time.Time  `json:"start_date"`
+	EndDate      *time.Time `json:"end_date"`
 }
