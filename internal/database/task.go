@@ -4,15 +4,19 @@ import (
 	"time"
 
 	"github.com/Golang-Eskar/subscription-aggregator/internal/models"
+	"github.com/google/uuid"
 )
 
 func Baysub(w models.Subscription) (int, error) {
-	var id int
+	if w.UserID == "" {
+		w.UserID = uuid.New().String()
+	}
 
+	var id int
 	err := DB.QueryRow(
 		`INSERT INTO subscriptions (service_name, monthly_price, user_id, start_date)
-		 VALUES ($1, $2, $3, $4)
-		 RETURNING id`,
+         VALUES ($1, $2, $3, $4)
+         RETURNING id`,
 		w.ServiceName,
 		w.MonthlyPrice,
 		w.UserID,
@@ -25,7 +29,10 @@ func Baysub(w models.Subscription) (int, error) {
 
 	return id, nil
 }
-func NewTask(service_name string, price int, user_id string, start_date time.Time) *models.Subscription {
+func NewTask(service_name string, price float64, user_id string, start_date time.Time) *models.Subscription {
+	if user_id == "" {
+		user_id = uuid.New().String()
+	}
 	return &models.Subscription{
 		ServiceName:  service_name,
 		MonthlyPrice: price,

@@ -9,23 +9,35 @@ import (
 	"github.com/Golang-Eskar/subscription-aggregator/internal/database"
 	"github.com/Golang-Eskar/subscription-aggregator/internal/models"
 	"github.com/go-chi/chi/v5"
+	"github.com/google/uuid"
 )
 
 func Create(w http.ResponseWriter, r *http.Request) {
 	var sub models.Subscription
-	json.NewDecoder(r.Body).Decode(&sub)
+	if err := json.NewDecoder(r.Body).Decode(&sub); err != nil {
+		http.Error(w, "invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	if sub.UserID == "" {
+		sub.UserID = uuid.New().String()
+	}
+
+	if sub.MonthlyPrice <= 0 {
+		http.Error(w, "monthly_price must be greater than 0", http.StatusBadRequest)
+		return
+	}
 
 	sub.StartDate = time.Now()
 
 	id, err := database.Create(sub)
 	if err != nil {
-		http.Error(w, err.Error(), 500)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	json.NewEncoder(w).Encode(map[string]any{"id": id})
 }
-
 func GetAll(w http.ResponseWriter, r *http.Request) {
 	subs, _ := database.GetAll()
 	json.NewEncoder(w).Encode(subs)

@@ -1,35 +1,28 @@
-FROM golang:1.22-alpine AS builder
-
+FROM golang:1.25-alpine AS builder
 
 RUN apk add --no-cache git build-base
 
-
 WORKDIR /app
-
 
 COPY go.mod go.sum ./
 RUN go mod download
 
-
 COPY . .
 
-RUN go build -o subscription-aggregator ./cmd/app
+# Собираем main.go прямо из cmd
+RUN go build -o subscription-aggregator ./cmd
 
 FROM alpine:latest
 
-
 RUN apk --no-cache add ca-certificates tzdata
-
 
 WORKDIR /app
 
-
 COPY --from=builder /app/subscription-aggregator .
 
-
-COPY .env config.yaml ./
+# Копируем только .env
+COPY .env ./
 
 EXPOSE 8080
-
 
 CMD ["./subscription-aggregator"]
